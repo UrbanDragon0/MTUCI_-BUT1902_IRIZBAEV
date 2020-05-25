@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <title>WARHAMMER40000</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/archive_style.css' %}">
+</head>
+
+<style>
+body {background-image: url({% static 'imgs/fon2.jpg' %});
+   background-size: 100%;
+   background-color: black}
+ </style>
+
+<script>
+let foldBtns = document.getElementsByClassName("fold-button");
+for (let i = 0; i<foldBtns.length; i++){
+  foldBtns[i].addEventListener('mousedown', function(event) {
+    if(event.target.parentElement.className === "one-post"){
+      event.target.parentElement.className = "one-post-folded";
+      event.target.value = "Развернуть";
+    }else if(event.target.parentElement.className === "one-post-folded"){
+      event.target.parentElement.className = "one-post";
+      event.target.value = "Свернуть";
+    }
+  });
+}
+
+</script>
+
+<body>
+  {% load static %}
+  <div>
+    <table>
+      <tr>
+        <td><img src="{% static 'imgs/logo.png' %}" height="432" width="768"></td>
+        <td><h2><a class="fciA navItem" href="/"><span class="fciSpan">Назад</span></a></h2></td>
+        <td><h2><a class="fciA navItem" href="/article_new/"><span class="fciSpan">Написать собственный манускрипт</span></a></h2></td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class = 'hed'>
+      {% for post in posts %}
+      <div>
+        <h2><a href="/article/{{ post.id }}">{{ post.title }}</a></h2>
+
+
+        <input class="fold-button" type="submit" value="Свернуть">
+        <div>
+          <div class="article-author">{{ post.author.username }}</div>
+          <div class="article-created-date" >{{ post.created_date }}</div>
+        </div>
+        <div class="article-text" >{{ post.get_excerpt }} </div>
+
+
+      {% endfor %}
+    </div>
+</div>
+</body>
+</html>
